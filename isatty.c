@@ -22,8 +22,6 @@ void _non_isatty(void)
 
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n]);
-	printf("%li\n", n);
-
 	free_args(tmp);
 
 	exit(0);

@@ -116,9 +116,14 @@ int exec_cmds(char **args)
 			perror(args[0]);
 			return (exit_v = 127);
 		}
-
 	}
 
+	if (echo_cmd(path, args) == 0)
+	{
+		if (*args[0] != '/')
+			free(path);
+		return (0);
+	}
 	exec_cmd(path, args);
 
 	if (*args[0] != '/')
@@ -142,20 +147,6 @@ int exec_cmd(char *arg, char **args)
 	int status;
 	pid_t pid;
 
-	if (_strcmp(arg, "/usr/bin/echo") == 0)
-	{
-		if (_strcmp(args[1], "$$") == 0)
-		{
-			printf("%i\n", getpid());
-			return (exit_v = 0);
-		}
-		else if (_strcmp(args[1], "$?") == 0)
-		{
-			printf("%i\n", exit_v);
-			return (exit_v = 0);
-		}
-	}
-
 	pid = fork();
 	if (pid == 0)
 	{
@@ -178,31 +169,46 @@ int exec_cmd(char *arg, char **args)
 }
 
 
+
+
 /**
- * parse_args - parse commands to get the arguments.
- * @cmd: input command.
+ * echo_cmd - checks for $ in the echo command
+ * @arg: executable
+ * @args: input commands.
  *
- * Return: commands and aommand arguments.
+ * Return: 0 on success, -1 on failure
  */
-char **parse_args(char *cmd)
+int echo_cmd(char *arg, char **args)
 {
-	char **args, *arg;
-	int i = 0;
-
-	args = malloc(MAX_NUM_ARGS * sizeof(char *));
-	if (!args)
-		return (NULL);
-
-	arg = strtok(cmd, " ");
-
-	while (arg)
+	if (_strcmp(arg, "/usr/bin/echo") == 0 && *(args[1]) == '$')
 	{
-		args[i++] = strdup(arg);
-		arg = strtok(NULL, " ");
+
+		if (_strcmp(args[1], "$$") == 0)
+		{
+			char *pid = _itoa(getpid());
+
+			write(STDOUT_FILENO, pid, _strlen(pid));
+			write(STDOUT_FILENO, "\n", 1);
+			free(pid);
+		}
+		else if (_strcmp(args[1], "$?") == 0)
+		{
+			char *_exit_v = _itoa(exit_v);
+
+			write(STDOUT_FILENO, _exit_v, _strlen(_exit_v));
+			write(STDOUT_FILENO, "\n", 1);
+			free(_exit_v);
+		}
+		else
+		{
+			char *tmp = _strdup(args[1] + 1);
+			char *env = _getenv(tmp);
+
+			write(STDOUT_FILENO, env, _strlen(env));
+			write(STDOUT_FILENO, "\n", 1);
+			free(tmp);
+		}
+		return (0);
 	}
-
-	args[i] = NULL;
-
-	/*free(cmd);*/
-	return (args);
+	return (-1);
 }

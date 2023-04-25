@@ -71,7 +71,7 @@ char *get_cmd();
 char *get_cmd_path(char *cmd);
 int exec_cmds(char **args);
 int exec_cmd(char *arg, char **args);
-char **parse_args(char *cmd);
+int echo_cmd(char *arg, char **args);
 
 
 
@@ -127,6 +127,8 @@ char *_strtok_r(char *str, char *delim, char **saveptr);
 
 /************string_helphers3********/
 char *_strdup(char *str);
+char *_itoa(int num);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 
 #endif
