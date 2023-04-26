@@ -118,7 +118,3 @@ Here are the steps required to contribute to this shell project, including repor
 To report a bug or submit a feature request, you can create a new issue in the project's repository on GitHub. Make sure to provide detailed information about the bug or feature, including steps to reproduce the bug and a description of the desired feature.
 
 To make code contributions to the project, follow the steps outlined above and make sure to adhere to the project's coding standards and contribution guidelines. Additionally, make sure to write clear and concise code comments and documentation to help other contributors understand your changes.
-
-## Authors:
-Chidiadi Emmanuel Nwosu
-Eloghene Otiede
