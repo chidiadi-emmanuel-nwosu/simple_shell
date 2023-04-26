@@ -7,10 +7,12 @@
 
 /**
  * _non_isatty - runs non-interactive mode with an input from pipe
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: void
  */
-void _non_isatty(void)
+void _non_isatty(char *prog, int *hist)
 {
 	char buffer[BUF_SIZE], **tmp;
 	ssize_t n;
@@ -21,7 +23,7 @@ void _non_isatty(void)
 	tmp = split(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
-		handle_cmd(tmp[n]);
+		handle_cmd(tmp[n], prog, hist);
 	free_args(tmp);
 
 	exit(0);
@@ -32,10 +34,12 @@ void _non_isatty(void)
 
 /**
  * _isatty - runs interactive mode of the shell
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: void
  */
-void _isatty(void)
+void _isatty(char *prog, int *hist)
 {
 	char *cmd;
 
@@ -46,12 +50,12 @@ void _isatty(void)
 		cmd = get_cmd();
 		if (*cmd == ';' || *cmd == '|' || *cmd == '&')
 		{
-			syntax_error(cmd);
+			syntax_error(cmd, prog, *hist);
 			free(cmd);
 			continue;
 		}
 
-		handle_cmd(cmd);
+		handle_cmd(cmd, prog, hist);
 		free(cmd);
 	}
 }
@@ -62,10 +66,12 @@ void _isatty(void)
 /**
  * file_input - runs non-interactive mode with an input from file
  * @av: input from commandline
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: void
  */
-void file_input(char **av)
+void file_input(char **av, char *prog, int *hist)
 {
 	char buffer[BUF_SIZE], **tmp;
 	ssize_t fd = 0, n = 0;
@@ -83,7 +89,7 @@ void file_input(char **av)
 	tmp = split(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
-		handle_cmd(tmp[n]);
+		handle_cmd(tmp[n], prog, hist);
 
 	free_args(tmp);
 	close(fd);

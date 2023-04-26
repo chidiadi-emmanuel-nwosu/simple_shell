@@ -42,14 +42,17 @@ char *check_comments(char *s)
 /**
  * handle_cmd - handle input from commandline
  * @cmd: input
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: void
  */
-void handle_cmd(char *cmd)
+void handle_cmd(char *cmd, char *prog, int *hist)
 {
 	int i = 0;
 	char **tok = split(cmd, ";");
 
+	*hist += 1;
 	while (tok[i])
 	{
 		char **subtok = split(tok[i], " ");
@@ -73,7 +76,7 @@ void handle_cmd(char *cmd)
 				exit(status);
 			}
 		}
-		exec_cmds(subtok);
+		exec_cmds(subtok, prog, *hist);
 		free_args(subtok);
 		i++;
 	}

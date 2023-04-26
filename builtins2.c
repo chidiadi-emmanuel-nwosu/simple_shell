@@ -9,14 +9,16 @@
 /**
  * setenv_cmd - implements setenv command
  * @args: arguments passed in.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: 0 on success, -1 on failure
  */
-int setenv_cmd(char **args)
+int setenv_cmd(char **args, char *prog, int hist)
 {
 	if (args[1] == NULL)
 	{
-		cmd_error(args[0]);
+		cmd_error(args[0], prog, hist);
 	}
 
 	else if (args[2] == NULL)
@@ -40,13 +42,15 @@ int setenv_cmd(char **args)
 /**
  * unsetenv_cmd - implements unsetenv command
  * @args: arguments passed in.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: 0 on success, -1 on failure
  */
-int unsetenv_cmd(char **args)
+int unsetenv_cmd(char **args, char *prog, int hist)
 {
 	if (args[1] == NULL)
-		cmd_error(args[0]);
+		cmd_error(args[0], prog, hist);
 
 	else
 		_unsetenv(args[1]);

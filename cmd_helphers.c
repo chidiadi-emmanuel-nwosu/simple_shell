@@ -86,16 +86,18 @@ char *get_cmd_path(char *cmd)
 /**
  * exec_cmds - executes commands from the shell.
  * @args: input commands.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: command input from the shell
  */
-int exec_cmds(char **args)
+int exec_cmds(char **args, char *prog, int hist)
 {
 	char *path;
 
 	if (get_cmd_func(args[0]))
 	{
-		get_cmd_func(args[0])(args);
+		get_cmd_func(args[0])(args, prog, hist);
 		return (exit_v = 0);
 	}
 
@@ -104,7 +106,7 @@ int exec_cmds(char **args)
 		path = get_cmd_path(args[0]);
 		if (!path)
 		{
-			cmd_error(args[0]);
+			cmd_error(args[0], prog, hist);
 			return (exit_v = 127);
 		}
 	}
@@ -113,7 +115,7 @@ int exec_cmds(char **args)
 		path = args[0];
 		if (access(path, X_OK) != 0)
 		{
-			perror(args[0]);
+			cmd_error(args[0], prog, hist);
 			return (exit_v = 127);
 		}
 	}

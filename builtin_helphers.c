@@ -11,7 +11,7 @@
  *
  * Return: called function
  */
-int (*get_cmd_func(char *s))(char **)
+int (*get_cmd_func(char *s))(char **, char*, int)
 {
 	op_t builtins[] = {
 		{"cd", cd_cmd},

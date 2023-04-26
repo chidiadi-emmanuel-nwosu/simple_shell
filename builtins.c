@@ -8,11 +8,15 @@
 /**
  * cd_cmd - implements cd command
  * @args: arguments passed in.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: 0 on success, -1 on failure
  */
-int cd_cmd(char **args)
+int cd_cmd(char **args, char *prog, int hist)
 {
+	if (hist || prog)
+	{}
 	if (args[1] == NULL)
 		chdir(_getenv("HOME"));
 
@@ -27,13 +31,17 @@ int cd_cmd(char **args)
 /**
  * env_cmd - implements env command
  * @args: arguments passed in.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: 0 on success, -1 on failure
  */
-int env_cmd(__attribute__((unused)) char **args)
+int env_cmd(char **args, char *prog, int hist)
 {
 	int i = 0;
 
+	if (hist && args && prog)
+	{}
 	if (environ)
 	{
 		while (environ[i])
@@ -52,11 +60,15 @@ int env_cmd(__attribute__((unused)) char **args)
 /**
  * exit_cmd - implements exit command
  * @args: arguments passed in.
+ * @prog: program name.
+ * @hist: history counter.
  *
  * Return: 0 on success, -1 on failure
  */
-int exit_cmd(char **args)
+int exit_cmd(char **args, char *prog, int hist)
 {
+	if (hist && prog)
+	{}
 	if (args[1] == NULL)
 	{
 		free_args(args);

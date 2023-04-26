@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,6 +17,7 @@
 extern char **environ;
 static __attribute__((unused)) int exit_v;
 
+
 /**
  * struct op - Struct op
  *
@@ -26,7 +27,7 @@ static __attribute__((unused)) int exit_v;
 typedef struct op
 {
 	char *op;
-	int (*f)(char **);
+	int (*f)(char **, char *, int);
 } op_t;
 
 
@@ -40,26 +41,26 @@ void free_args(char **args);
 
 
 /***********builtins_helpers.c*********/
-int (*get_cmd_func(char *s))(char **);
+int (*get_cmd_func(char *s))(char **, char *, int);
 
 
 /***********builtins.c*********/
-int cd_cmd(char **args);
-int env_cmd(char **args);
-int exit_cmd(char **args);
-int pwd_cmd(char **args);
-int clear_cmd(char **);
+int cd_cmd(char **args, char *, int);
+int env_cmd(char **args, char *, int);
+int exit_cmd(char **args, char *, int);
+int pwd_cmd(char **args, char *, int);
+int clear_cmd(char **, char *, int);
 
 
 
 
 /***********builtins2.c*********/
-int setenv_cmd(char **args);
-int unsetenv_cmd(char **args);
+int setenv_cmd(char **args, char *, int);
+int unsetenv_cmd(char **args, char *, int);
 
 
 /**********cmd_handlers**********/
-void handle_cmd(char *cmd);
+void handle_cmd(char *cmd, char *, int *);
 char **split(char *cmd, char *delim);
 
 
@@ -67,7 +68,7 @@ char **split(char *cmd, char *delim);
 /***********cmd_helphers.c********/
 char *get_cmd();
 char *get_cmd_path(char *cmd);
-int exec_cmds(char **args);
+int exec_cmds(char **args, char *, int);
 int exec_cmd(char *arg, char **args);
 int echo_cmd(char *arg, char **args);
 
@@ -82,15 +83,15 @@ int _unsetenv(char *name);
 
 
 /***********errors.c********/
-void cmd_error(char *cmd);
-void syntax_error(char *cmd);
+void cmd_error(char *cmd, char *, int);
+void syntax_error(char *cmd, char *, int);
 
 
 
 /***********isatty.c********/
-void _non_isatty(void);
-void _isatty(void);
-void file_input(char **av);
+void _non_isatty(char *, int *);
+void _isatty(char *, int *);
+void file_input(char **av, char *, int *);
 
 
 
