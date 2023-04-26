@@ -14,11 +14,15 @@
  * Return: number of bytes read
  */
 
-ssize_t _getline(char **lineptr, size_t *n, __attribute__((unused)) FILE * str)
+ssize_t _getline(char **lineptr, size_t *n, FILE *str)
 {
 	ssize_t read_byte = 0;
-	size_t count = 0;
+	static size_t count;
 	char c;
+
+	if (count == 0)
+		fflush(str);
+	count = 0;
 
 	if (*lineptr == NULL || *n == 0)
 	{
@@ -30,7 +34,6 @@ ssize_t _getline(char **lineptr, size_t *n, __attribute__((unused)) FILE * str)
 	}
 
 	read_byte = read(STDIN_FILENO, &c, 1);
-
 	while (read_byte)
 	{
 		if (read_byte == -1)
