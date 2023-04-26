@@ -17,7 +17,7 @@
 ssize_t _getline(char **lineptr, size_t *n, __attribute__((unused)) FILE * str)
 {
 	ssize_t read_byte = 0;
-	static size_t count;
+	size_t count = 0;
 	char c;
 
 	if (*lineptr == NULL || *n == 0)
