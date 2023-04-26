@@ -39,9 +39,16 @@ void cmd_error(char *cmd, char *prog, int hist)
  */
 void syntax_error(char *cmd, char *prog, int hist)
 {
-	if (hist || prog)
-	{}
-	write(STDOUT_FILENO, "syntax error near unexpected token `", 36);
+	char *hst = _itoa(hist);
+
+	write(STDOUT_FILENO, prog, _strlen(prog));
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, hst, _strlen(hst));
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, "syntax error: ", 14);
+	write(STDOUT_FILENO, "\"", 1);
 	write(STDOUT_FILENO, cmd, 1);
-	write(STDOUT_FILENO, "'\n", 2);
+	write(STDOUT_FILENO, "\" ", 2);
+	write(STDOUT_FILENO, "unexpected\n", 11);
+	free(hst);
 }

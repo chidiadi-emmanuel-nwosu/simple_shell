@@ -57,24 +57,17 @@ void handle_cmd(char *cmd, char *prog, int *hist)
 	{
 		char **subtok = split(tok[i], " ");
 
-		if (_strcmp(subtok[0], "exit") == 0)
+		if ((i == 0) && (_strncmp(subtok[i], "exit", 4) == 0))
 		{
-			if (subtok[1] == NULL)
-			{
-				free(cmd);
-				free_args(subtok);
-				free_args(tok);
-				exit(0);
-			}
-			else
-			{
-				int status = _atoi(subtok[1]);
+			int status = 0;
 
-				free(cmd);
-				free_args(subtok);
-				free_args(tok);
-				exit(status);
-			}
+			if (subtok[1])
+				status = _atoi(subtok[1]);
+
+			free_args(subtok);
+			free_args(tok);
+			free(cmd);
+			exit(status);
 		}
 		exec_cmds(subtok, prog, *hist);
 		free_args(subtok);

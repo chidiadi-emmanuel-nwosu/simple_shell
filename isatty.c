@@ -48,12 +48,6 @@ void _isatty(char *prog, int *hist)
 	{
 		prompt();
 		cmd = get_cmd();
-		if (*cmd == ';' || *cmd == '|' || *cmd == '&')
-		{
-			syntax_error(cmd, prog, *hist);
-			free(cmd);
-			continue;
-		}
 
 		handle_cmd(cmd, prog, hist);
 		free(cmd);

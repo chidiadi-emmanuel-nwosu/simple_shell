@@ -3,7 +3,7 @@
 A simple shell project is a program that emulates the functionality of a command-line interface, where users can execute various commands and interact with the system. The main objective of this project is to create a functional shell program that can interpret and execute user commands.
 
 
-## Project Overview: 
+## Project Overview:
 The simple shell project is a program that emulates the functionality of a command-line interface, where users can execute various commands and interact with the system. The primary goal of this project is to create a functional shell program that can interpret and execute user commands, providing a user-friendly and efficient command-line interface for users to interact with their system.
 
 This simple shell project is designed to be highly modular and easily extensible, allowing developers to add new features and commands as needed. It provides users with a set of built-in commands that include basic file management, process management, and system information commands. Additionally, users can customize the shell with their own commands, aliases, and environment variables.
@@ -12,7 +12,7 @@ The program is written in C programming language,  and can run on various operat
 
 This simple shell project is an excellent tool for developers, system administrators, and power users who frequently interact with the command-line interface. It provides an easy-to-use, customizable interface for executing various system commands and scripts, making it an essential tool for any command-line user.
 
-## Getting Started: 
+## Getting Started:
 To download and install the shell program, please follow the following steps:
 
 1. Go to the project repository on GitHub.
@@ -22,34 +22,34 @@ To download and install the shell program, please follow the following steps:
 5. Run the command "gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell" to compile the shell program.
 6. Once the compilation is complete, you can run the shell program by typing "./shell" in the terminal.
 
-If you encounter any errors during the compilation process, please make sure that you have all the required dependencies installed on your system. You can find the list of dependencies in the README file or in the makefile. 
+If you encounter any errors during the compilation process, please make sure that you have all the required dependencies installed on your system. You can find the list of dependencies in the README file or in the makefile.
 
 Once you have successfully installed the shell program, you can start using it to execute various commands and interact with your system.
 
 The dependencies or prerequisites required to run the shell program can vary depending on the programming language and libraries used to develop the shell program. However, some common dependencies that may be required include:
 
-### C Compiler: 
+### C Compiler:
 If the shell program is written in C, you will need to have a C compiler installed on your system. Examples of popular C compilers include GCC, Clang, and Microsoft Visual C++.
 
-### Libraries: 
+### Libraries:
 The shell program may require certain libraries to be installed on your system to function properly. Examples of commonly used libraries include readline, ncurses, and libuv.
 
-### Operating System: 
+### Operating System:
 The shell program may be developed specifically for a certain operating system, such as Linux, macOS, or Windows. Make sure that you have the correct operating system version and architecture (32-bit or 64-bit) for the shell program.
 
-### System Utilities: 
+### System Utilities:
 The shell program may rely on certain system utilities to function properly, such as ls, ps, and mkdir. These utilities should be installed on your system before running the shell program.
 
 _You can find the specific dependencies required for the shell program in the README file or in the makefile. Please make sure that you have all the required dependencies installed on your system before attempting to compile or run the shell program._
 
-## Usage: 
+## Usage:
 To use the shell program, you can enter commands using the command-line interface in the terminal window. The syntax for entering commands in the shell is similar to that of other command-line interfaces. Here are the basic steps for entering commands in the shell:
 
 1. Open a terminal window.
 2. Navigate to the directory where the shell program is located.
 3. Type the command followed by any arguments or options.
 
-## Examples: 
+## Examples:
 For example, to list the files in the current directory, you would enter the following command:
 
 ```
@@ -122,6 +122,3 @@ To make code contributions to the project, follow the steps outlined above and m
 ## Authors:
 Chidiadi Emmanuel Nwosu
 Eloghene Otiede
-
-
-
