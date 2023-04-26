@@ -27,6 +27,7 @@ char *get_cmd()
 	if (n_read > 0 && cmd[n_read - 1] == '\n')
 		cmd[n_read - 1] = '\0';
 
+	printf("%i\n", n_read);
 	return (_strip(check_comments(cmd)));
 }
 

@@ -17,45 +17,42 @@
 ssize_t _getline(char **lineptr, size_t *n, FILE *str)
 {
 	ssize_t read_byte = 0;
-	static size_t count;
-	char c;
+	char input, *buffer;
 
-	if (count == 0)
-		fflush(str);
-	count = 0;
+	fflush(str);
+	*n = 0;
 
-	if (*lineptr == NULL || *n == 0)
-	{
-		*lineptr = malloc(BUF_SIZE);
-		if (*lineptr == NULL)
-			return (-1);
+	buffer = malloc(BUF_SIZE);
+	if (buffer == NULL)
+		return (-1);
 
-		*n = MAX_LINE;
-	}
-
-	read_byte = read(STDIN_FILENO, &c, 1);
+	read_byte = read(STDIN_FILENO, &input, 1);
 	while (read_byte)
 	{
 		if (read_byte == -1)
 		{
-			free(*lineptr);
+			free(buffer);
 			return (-1);
 		}
 
-		if (c == '\n')
+		if (input == '\n')
 			break;
 
-		if (count >= BUF_SIZE)
-			*lineptr = _realloc(*lineptr, count, count + 1);
-		(*lineptr)[count++] = c;
-		read_byte = read(STDIN_FILENO, &c, 1);
+		if (*n >= BUF_SIZE)
+			buffer = _realloc(buffer, *n, *n + 1);
+		buffer[(*n)++] = input;
+		read_byte = read(STDIN_FILENO, &input, 1);
+	}
+	if (read_byte == 0 && *n == 0)
+	{
+		free(buffer);
+		return (-1);
 	}
 
-	if (read_byte == 0 && count == 0)
-		return (-1);
+	buffer[*n] = '\0';
+	*lineptr = buffer;
 
-	(*lineptr)[count] = '\0';
-	return (read_byte);
+	return (++(*n));
 }
 
 
