@@ -152,7 +152,7 @@ char *_strtok_r(char *str, char *delim, char **saveptr)
 	str = _strpbrk(token, delim);
 	if (str == NULL)
 	{
-		*saveptr = strchr(token, '\0');
+		*saveptr = _strchr(token, '\0');
 	}
 	else
 	{

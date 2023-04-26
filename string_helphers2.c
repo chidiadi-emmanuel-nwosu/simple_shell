@@ -106,7 +106,7 @@ char *_strip(char *str)
 	int i = 0, j = 0;
 	char *sstr;
 
-	sstr = malloc(strlen(str) + 1);
+	sstr = malloc(_strlen(str) + 1);
 	if (!sstr)
 		return (NULL);
 

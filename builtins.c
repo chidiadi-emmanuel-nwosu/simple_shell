@@ -36,7 +36,7 @@ int env_cmd(__attribute__((unused)) char **args)
 
 	while (var)
 	{
-		write(STDOUT_FILENO, var, strlen(var));
+		write(STDOUT_FILENO, var, _strlen(var));
 		write(STDOUT_FILENO, "\n", 1);
 		var = *(environ++);
 	}
@@ -61,7 +61,7 @@ int exit_cmd(char **args)
 	}
 	else
 	{
-		int status = atoi(args[1]);
+		int status = _atoi(args[1]);
 
 		free_args(args);
 		exit(status);

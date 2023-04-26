@@ -16,6 +16,7 @@ int (*get_cmd_func(char *s))(char **)
 	op_t builtins[] = {
 		{"cd", cd_cmd},
 		{"exit", exit_cmd},
+		{"env", env_cmd},
 		{"setenv", setenv_cmd},
 		{"unsetenv", unsetenv_cmd},
 		{NULL, NULL}

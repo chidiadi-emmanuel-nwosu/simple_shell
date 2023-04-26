@@ -120,7 +120,7 @@ char **split(char *cmd, char *delim)
 				free_args(args);
 				return (NULL);
 			}
-			strncpy(args[row], tmp + start, width);
+			_strncpy(args[row], tmp + start, width);
 			args[row][width] = '\0';
 			args[row] = _strip(args[row]);
 

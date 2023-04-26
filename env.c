@@ -72,9 +72,9 @@ int _setenv(char *name, char *value, int overwrite)
 		env++;
 	}
 
-	memcpy(new_value, name, name_len);
+	_memcpy(new_value, name, name_len);
 	new_value[name_len] = '=';
-	memcpy(new_value + name_len + 1, value, value_len);
+	_memcpy(new_value + name_len + 1, value, value_len);
 	new_value[name_len + value_len + 1] = '\0';
 	*(env++) = new_value;
 	*env = NULL;
@@ -98,7 +98,7 @@ int _unsetenv(char *name)
 
 	while (*env)
 	{
-		if (strncmp(*env, name, strlen(name)) == 0 && (*env)[strlen(name)] == '=')
+		if (_strncmp(*env, name, _strlen(name)) == 0 && (*env)[_strlen(name)] == '=')
 		{
 			char **tmp = env;
 

@@ -1,15 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
-#include <string.h>
 #include <sys/wait.h>
 #include <limits.h>
 #include <fcntl.h>
-
+#include <stdio.h>
 #define TRUE 1
 #define MAX_NUM_ARGS 124
 #define MAX_LINE 80
@@ -129,6 +127,7 @@ char *_strtok_r(char *str, char *delim, char **saveptr);
 char *_strdup(char *str);
 char *_itoa(int num);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_strncpy(char *dest, char *src, int n);
 
 
 #endif
