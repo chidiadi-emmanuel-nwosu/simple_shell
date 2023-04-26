@@ -27,7 +27,6 @@ char *get_cmd()
 	if (n_read > 0 && cmd[n_read - 1] == '\n')
 		cmd[n_read - 1] = '\0';
 
-	printf("%i\n", n_read);
 	return (_strip(check_comments(cmd)));
 }
 
@@ -168,7 +167,8 @@ int exec_cmd(char *arg, char **args)
 	else
 		waitpid(pid, &status, 0);
 
-	return (exit_v = WEXITSTATUS(status));
+	errno = status % 255;
+	return (errno);
 }
 
 

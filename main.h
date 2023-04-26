@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <stdio.h>
 #define TRUE 1
 #define MAX_NUM_ARGS 124
