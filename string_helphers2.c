@@ -17,7 +17,7 @@
 ssize_t _getline(char **lineptr, size_t *n, __attribute__((unused)) FILE * str)
 {
 	ssize_t read_byte = 0;
-	size_t count = 0;
+	static size_t count;
 	char c;
 
 	if (*lineptr == NULL || *n == 0)
@@ -42,6 +42,8 @@ ssize_t _getline(char **lineptr, size_t *n, __attribute__((unused)) FILE * str)
 		if (c == '\n')
 			break;
 
+		if (count >= BUF_SIZE)
+			*lineptr = _realloc(*lineptr, count, count + 1);
 		(*lineptr)[count++] = c;
 		read_byte = read(STDIN_FILENO, &c, 1);
 	}

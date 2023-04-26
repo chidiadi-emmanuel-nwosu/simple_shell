@@ -32,13 +32,16 @@ int cd_cmd(char **args)
  */
 int env_cmd(__attribute__((unused)) char **args)
 {
-	char *var = *environ;
+	int i = 0;
 
-	while (var)
+	if (environ)
 	{
-		write(STDOUT_FILENO, var, _strlen(var));
-		write(STDOUT_FILENO, "\n", 1);
-		var = *(environ++);
+		while (environ[i])
+		{
+			write(STDOUT_FILENO, environ[i], _strlen(environ[i]));
+			write(STDOUT_FILENO, "\n", 1);
+			i++;
+		}
 	}
 
 	return (0);

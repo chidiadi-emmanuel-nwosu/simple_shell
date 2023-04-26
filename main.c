@@ -15,7 +15,6 @@
  */
 int main(__attribute__((unused)) int ac, __attribute__((unused)) char **av)
 {
-
 	if (!isatty(STDIN_FILENO))
 		_non_isatty();
 
