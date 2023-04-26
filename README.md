@@ -91,7 +91,7 @@ $ cat file.txt
 The shell program may also support various options and flags that modify the behavior of the commands. You can find more information about the supported options and flags in the program's documentation or by using the "man" command followed by the command name.
 
 ## Contributing:
-Here are the steps required to contribute to a shell project, including reporting bugs, submitting feature requests, and making code contributions:
+Here are the steps required to contribute to this shell project, including reporting bugs, submitting feature requests, and making code contributions:
 
 1. Familiarize yourself with the project: Read through the project's README file and documentation to understand its purpose, functionality, and contribution guidelines.
 
@@ -119,8 +119,9 @@ To report a bug or submit a feature request, you can create a new issue in the p
 
 To make code contributions to the project, follow the steps outlined above and make sure to adhere to the project's coding standards and contribution guidelines. Additionally, make sure to write clear and concise code comments and documentation to help other contributors understand your changes.
 
-## License: 
-
+## Authors:
+Chidiadi Emmanuel Nwosu
+Eloghene Otiede
 
 
 
