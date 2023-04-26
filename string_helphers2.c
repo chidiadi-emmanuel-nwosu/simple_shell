@@ -17,13 +17,13 @@
 ssize_t _getline(char **lineptr, size_t *n, FILE *str)
 {
 	ssize_t read_byte = 0;
-	char input, *buffer;
+	char input;
 
 	fflush(str);
 	*n = 0;
 
-	buffer = malloc(BUF_SIZE);
-	if (buffer == NULL)
+	*lineptr = malloc(BUF_SIZE);
+	if (*lineptr == NULL)
 		return (-1);
 
 	read_byte = read(STDIN_FILENO, &input, 1);
@@ -31,7 +31,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *str)
 	{
 		if (read_byte == -1)
 		{
-			free(buffer);
+			free(*lineptr);
 			return (-1);
 		}
 
@@ -39,18 +39,14 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *str)
 			break;
 
 		if (*n >= BUF_SIZE)
-			buffer = _realloc(buffer, *n, *n + 1);
-		buffer[(*n)++] = input;
+			*lineptr = _realloc(*lineptr, *n, *n + 1);
+		(*lineptr)[(*n)++] = input;
 		read_byte = read(STDIN_FILENO, &input, 1);
 	}
 	if (read_byte == 0 && *n == 0)
-	{
-		free(buffer);
 		return (-1);
-	}
 
-	buffer[*n] = '\0';
-	*lineptr = buffer;
+	(*lineptr)[*n] = '\0';
 
 	return (++(*n));
 }
