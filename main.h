@@ -65,7 +65,7 @@ int unsetenv_cmd(char **args, char *, int);
 void handle_cmd(char *cmd, char *, int *);
 char **split(char *cmd, char *delim);
 char **parse_args(char *arg, const char *delim);
-int check_syntax (char *cmd, char *prog, int hist);
+int check_syntax(char *cmd, char *prog, int hist);
 
 
 
@@ -110,7 +110,7 @@ char *_strcat(char *dest, char *src);
 
 /************string_helphers2********/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-ssize_t readline(char *buffer, char** lineptr, size_t *n, ssize_t *buf_size);
+ssize_t readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size);
 char *_strip(char *str);
 char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
