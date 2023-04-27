@@ -1,45 +1,33 @@
 /*
- * File - main.c
- * Authors: Chidiadi E. Nwosu && Eloghene Otiede
+ * File: builtins.c
+ * Author: Chidiadi E. Nwosu
  */
+
 #include "main.h"
 
+
 /**
- * main - entry point
- * @ac: number of command line arguments(av).
- * @av: array of command line arguments
+ * main - UNIX command line interpreter.
+ * @ac: number of commandline arguments.
+ * @av: array of commandline arguments.
  *
- * Return: 0 on success
+ * Return: 0 (success)
  */
 int main(__attribute__((unused)) int ac, char **av)
 {
-	shell_t cmd;
-	const char *delim = " \t\n\r";
-	char *buffer = NULL;
-	ssize_t r;
-	size_t n;
+	int hist = 0;
+	char *prog = av[0];
 
-	cmd.prog = av[0];
-	cmd.hist = 0;
+	if (!isatty(STDIN_FILENO))
+		_non_isatty(prog, &hist);
 
-	prompt();
-	signal(SIGINT, signal_handler);
-	while ((r = getline(&buffer, &n, stdin)) != -1)
-	{
-		cmd.hist++;
-		if (r > 0 && (buffer[r - 1]) == '\n')
-			buffer[r - 1] = '\0';
-		cmd.args = parse_args(buffer, delim);
+	else if (ac > 1)
+		file_input(av, prog, &hist);
 
-		exec_cmds(cmd.args, cmd.prog, cmd.hist);
-		free_args(cmd.args);
+	else
+		_isatty(prog, &hist);
 
-		prompt();
-	}
-
-	free(buffer);
-	(void)av;
-	return (0);
+	return (errno);
 }
 
 
@@ -57,8 +45,6 @@ void prompt(void)
 }
 
 
-
-
 /**
  * signal_handler - reprompts the shell.
  * @signal: input signal
@@ -70,7 +56,6 @@ void signal_handler(__attribute__((unused)) int signal)
 	write(STDOUT_FILENO, "\n", 1);
 	prompt();
 }
-
 
 
 /**
