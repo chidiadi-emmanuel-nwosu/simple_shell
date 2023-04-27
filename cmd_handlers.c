@@ -54,9 +54,9 @@ void handle_cmd(char *cmd, char *prog, int *hist)
 
 	*hist += 1;
 
-	if (check_syntax(cmd, prog, *hist))
+/*	if (check_syntax(cmd, prog, *hist))
 		return;
-
+*/
 	args = parse_args(cmd, ";");
 	while (args[i])
 	{
