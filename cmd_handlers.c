@@ -50,13 +50,15 @@ char *check_comments(char *s)
 void handle_cmd(char *cmd, char *prog, int *hist)
 {
 	int i = 0;
-	char **args;
+	char **args = NULL;
 
 	*hist += 1;
 
-/*	if (check_syntax(cmd, prog, *hist))
+	if (!cmd || !(*cmd))
 		return;
-*/
+	if (check_syntax(cmd, prog, *hist))
+		return;
+
 	args = parse_args(cmd, ";");
 	while (args[i])
 	{

@@ -28,7 +28,7 @@ void _non_isatty(char *prog, int *hist)
 	tmp = parse_args(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
-		handle_cmd(tmp[n], prog, hist);
+		handle_cmd(_strip(tmp[n]), prog, hist);
 	free_args(tmp);
 
 }
@@ -52,6 +52,12 @@ void _isatty(char *prog, int *hist)
 	{
 		prompt();
 		cmd = get_cmd();
+
+		if (!cmd || !(*cmd))
+		{
+			free(cmd);
+			continue;
+		}
 
 		handle_cmd(cmd, prog, hist);
 		free(cmd);

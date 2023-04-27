@@ -14,20 +14,26 @@ char *get_cmd()
 {
 	char *cmd = NULL;
 	size_t size = 0;
-	int n_read = 0;
+	int r = 0;
 
-	n_read = _getline(&cmd, &size, stdin);
-	if (n_read == -1)
+	r = _getline(&cmd, &size, stdin);
+	if (r == -1 || (r == 0 && size == 0))
 	{
 		free(cmd);
 		write(STDOUT_FILENO, "\n", 1);
 		exit(EXIT_FAILURE);
 	}
 
-	if (n_read > 0 && cmd[n_read - 1] == '\n')
-		cmd[n_read - 1] = '\0';
+	if (r > 0 && cmd[r - 1] == '\n')
+		cmd[r - 1] = '\0';
 
-	return (_strip(check_comments(cmd)));
+	if (!cmd || !(*cmd))
+	{
+		free(cmd);
+		return (NULL);
+	}
+	else
+		return (_strip(cmd));
 }
 
 
@@ -184,6 +190,8 @@ int exec_cmd(char *arg, char **args, char *prog)
  */
 int echo_cmd(char *arg, char **args)
 {
+	if (!args[1])
+		return (-1);
 	if (_strcmp(arg, "/usr/bin/echo") == 0 && *(args[1]) == '$')
 	{
 

@@ -36,7 +36,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 
 /**
- * readline - helper to _getline function
+ * _readline - helper to _getline function
  * @lineptr: a buffer to store read input
  * @n: size of the buffer
  * @buffer: input storage
@@ -103,6 +103,8 @@ char *_strip(char *str)
 	int i = 0, j = 0;
 	char *sstr;
 
+	if (!(*str || !str))
+		return (NULL);
 	sstr = malloc(_strlen(str) + 1);
 	if (!sstr)
 		return (NULL);

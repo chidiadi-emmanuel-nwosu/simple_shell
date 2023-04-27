@@ -21,13 +21,13 @@ int main(__attribute__((unused)) int ac, char **av)
 	if (!isatty(STDIN_FILENO))
 		_non_isatty(prog, &hist);
 
-	else if (ac > 1)
+	if (ac > 1)
 		file_input(av, prog, &hist);
 
 	else
 		_isatty(prog, &hist);
 
-	return (errno);
+	return (0);
 }
 
 
