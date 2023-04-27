@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <stdio.h>
 #define TRUE 1
+#define FALSE 0
 #define MAX_NUM_ARGS 124
 #define MAX_LINE 80
 #define BUF_SIZE 1024
@@ -32,6 +33,19 @@ typedef struct op
 } op_t;
 
 
+/**
+ * struct shell - Struct op
+ *
+ * @args: passed in string tokens
+ * @prog: program name
+ * @hist: history
+ */
+typedef struct shell
+{
+	char **args;
+	char *prog;
+	int hist;
+} shell_t;
 
 
 /************main********/
@@ -63,14 +77,16 @@ int unsetenv_cmd(char **args, char *, int);
 /**********cmd_handlers**********/
 void handle_cmd(char *cmd, char *, int *);
 char **split(char *cmd, char *delim);
+char **parse_args(char *arg, const char *delim);
+int check_syntax(char *cmd, char *prog, int hist);
 
 
 
 /***********cmd_helphers.c********/
 char *get_cmd();
-char *get_cmd_path(char *cmd);
+char *get_path(char *cmd);
 int exec_cmds(char **args, char *, int);
-int exec_cmd(char *arg, char **args);
+int exec_cmd(char *arg, char **args, char *prog);
 int echo_cmd(char *arg, char **args);
 
 
@@ -107,7 +123,7 @@ char *_strcat(char *dest, char *src);
 
 /************string_helphers2********/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-int _atoi(char *s);
+ssize_t _readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size);
 char *_strip(char *str);
 char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
@@ -120,13 +136,14 @@ char *_strchr(char *s, char c);
 unsigned int _strspn(char *s, char *accept);
 char *_strpbrk(char *s, char *accept);
 char *_strstr(char *haystack, char *needle);
-char *_strtok_r(char *str, char *delim, char **saveptr);
+char *_strtok(char *str, const char *delim);
 
 
 
 
 /************string_helphers3********/
 char *_strdup(char *str);
+int _atoi(char *s);
 char *_itoa(int num);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncpy(char *dest, char *src, int n);
