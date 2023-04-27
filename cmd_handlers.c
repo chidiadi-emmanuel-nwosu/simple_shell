@@ -92,18 +92,18 @@ void handle_cmd(char *cmd, char *prog, int *hist)
  */
 char **parse_args(char *cmd, const char *delim)
 {
-	char **args, *tok, *dup;
+	char **args, *tok, *cmd_dup;
 	int i = 0;
 
 	if (!cmd || !delim)
 		return (NULL);
 
-	dup = _strdup(cmd);
+	cmd_dup = _strdup(cmd);
 
-	tok = _strtok(dup, delim);
+	tok = _strtok(cmd_dup, delim);
 	for (; tok; tok = _strtok(NULL, delim))
 		i++;
-	free(dup);
+	free(cmd_dup);
 
 	args = malloc(sizeof(char *) * (i + 1));
 	if (!args)
