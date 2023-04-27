@@ -17,10 +17,10 @@ int main(__attribute__((unused)) int ac, char **av)
 {
 	int hist = 0;
 	char *prog = av[0];
-
-	if (!isatty(STDIN_FILENO))
-		_non_isatty(prog, &hist);
-
+/*
+ *	if (!isatty(STDIN_FILENO))
+ *	_non_isatty(prog, &hist);
+ */
 	if (ac > 1)
 		file_input(av, prog, &hist);
 
