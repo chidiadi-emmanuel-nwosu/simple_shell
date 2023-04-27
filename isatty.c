@@ -20,7 +20,7 @@ void _non_isatty(char *prog, int *hist)
 	n = read(STDIN_FILENO, buffer, BUF_SIZE);
 	buffer[n - 1] = '\0';
 
-	tmp = split(buffer, "\n");
+	tmp = parse_args(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n], prog, hist);
@@ -80,7 +80,7 @@ void file_input(char **av, char *prog, int *hist)
 	n = read(fd, buffer, BUF_SIZE);
 	buffer[n - 1] = '\0';
 
-	tmp = split(buffer, "\n");
+	tmp = parse_args(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n], prog, hist);

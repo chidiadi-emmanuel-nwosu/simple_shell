@@ -57,7 +57,7 @@ char *get_cmd_path(char *cmd)
 		return (NULL);
 	}
 
-	dir = split(path_copy, ":");
+	dir = parse_args(path_copy, ":");
 	while (dir[i])
 	{
 		_memset(path, 0, PATH_MAX);
@@ -126,7 +126,7 @@ int exec_cmds(char **args, char *prog, int hist)
 			free(path);
 		return (0);
 	}
-	exec_cmd(path, args);
+	exec_cmd(path, args, prog);
 
 	if (*args[0] != '/')
 		free(path);
@@ -141,10 +141,11 @@ int exec_cmds(char **args, char *prog, int hist)
  * exec_cmd - executes commands from the shell.
  * @arg: executable
  * @args: input commands.
+ * @prog: program name.
  *
  * Return: command input from the shell
  */
-int exec_cmd(char *arg, char **args)
+int exec_cmd(char *arg, char **args, char *prog)
 {
 	int status;
 	pid_t pid;
@@ -154,7 +155,7 @@ int exec_cmd(char *arg, char **args)
 	{
 		if (execve(arg, args, environ) == -1)
 		{
-			perror(arg);
+			perror(prog);
 			free(arg);
 			exit(EXIT_FAILURE);
 		}

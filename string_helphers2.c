@@ -9,86 +9,85 @@
  * _getline - custom getline that reads input from a stream
  * @lineptr: a buffer to store read input
  * @n: size of the buffer
- * @str: input stream
+ * @stream: input stream
  *
  * Return: number of bytes read
  */
-
-ssize_t _getline(char **lineptr, size_t *n, FILE *str)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	ssize_t read_byte = 0;
-	char input;
+	char *buffer = NULL;
+	ssize_t buf_size = 0;
 
-	fflush(str);
-	*n = 0;
+	if (!stream)
+		stream = stdin;
+	if (!lineptr)
+		return (-1);
 
-	*lineptr = malloc(BUF_SIZE);
 	if (*lineptr == NULL)
-		return (-1);
+		*n = 0;
+	else
+		buf_size = *n;
 
-	read_byte = read(STDIN_FILENO, &input, 1);
-	while (read_byte)
-	{
-		if (read_byte == -1)
-		{
-			free(*lineptr);
-			return (-1);
-		}
+	return (readline(buffer, lineptr, n, &buf_size));
 
-		if (input == '\n')
-			break;
-
-		if (*n >= BUF_SIZE)
-			*lineptr = _realloc(*lineptr, *n, *n + 1);
-		(*lineptr)[(*n)++] = input;
-		read_byte = read(STDIN_FILENO, &input, 1);
-	}
-	if (read_byte == 0 && *n == 0)
-		return (-1);
-
-	(*lineptr)[*n] = '\0';
-
-	return (++(*n));
 }
+
 
 
 
 /**
- * _atoi - convert a string to an integer
- * @s: string to be converted
+ * readline - helper to _getline function
+ * @lineptr: a buffer to store read input
+ * @n: size of the buffer
+ * @buffer: input storage
+ * @buf_size: size of intitial read
  *
- * Return: converted int value
+ * Return: number of bytes read
  */
-int _atoi(char *s)
+ssize_t readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size)
 {
-	int c_nve = 0;
-	int i = 0;
-	unsigned int result = 0;
+	ssize_t read_bytes = 0;
 
-	while ((s[i] != '\0'))
+	while (TRUE)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		ssize_t r;
+
+		if (!(*buf_size))
+		{
+			*buf_size = BUF_SIZE;
+			buffer = malloc(*buf_size);
+			if (!buffer)
+				return (-1);
+		}
+		else if (read_bytes >= *buf_size)
+		{
+			buffer = _realloc(buffer, *buf_size, *buf_size * 2);
+			if (!buffer)
+				return (-1);
+			*buf_size *= 2;
+		}
+
+		r = read(STDIN_FILENO, buffer + read_bytes, *buf_size - read_bytes);
+		if (r == -1 || (r == 0 && read_bytes == 0))
+		{
+			free(buffer);
+			return (-1);
+		}
+		if (!r)
 			break;
-		else if (s[i] == '-')
-			c_nve++;
-
-		i++;
-	}
-
-	while ((s[i] != '\0'))
-	{
-		if (!(s[i] >= '0' && s[i] <= '9'))
+		read_bytes += r;
+		if (buffer[read_bytes - 1] == '\n')
+		{
+			buffer[read_bytes - 1] = '\0';
 			break;
-
-		result = result * 10 + s[i] - '0';
-		i++;
+		}
 	}
+	*lineptr = buffer;
+	*n = *buf_size;
 
-	if ((c_nve % 2) != 0)
-		result = -result;
-
-	return (result);
+	return (read_bytes);
 }
+
 
 
 

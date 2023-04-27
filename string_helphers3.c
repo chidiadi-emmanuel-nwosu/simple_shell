@@ -128,37 +128,52 @@ char *_strstr(char *haystack, char *needle)
 
 
 /**
- * _strtok_r - breaks a string into a sequence of zero or more nonempty tokens.
+ * _strtok - breaks a string into a sequence of zero or more nonempty tokens.
  * @str: input string
  * @delim: specifies a set of bytes that delimit the tokens in the
  *         parsed string.
- * @saveptr: pointer to a char * variable used internally to maintain
- *           context between successive calls that parse the same string.
  *
  * Return: pointer to the next token, or NULL if there are no more tokens.
  */
-char *_strtok_r(char *str, char *delim, char **saveptr)
+char *_strtok(char *str, const char *delim)
 {
-	char *token;
+	static char *saveptr;
+	char *tok;
 
-	if (str == NULL)
-		str = *saveptr;
-
-	str += _strspn(str, delim);
-	if (*str == '\0')
+	if (str)
+		saveptr = str;
+	if (!saveptr)
 		return (NULL);
 
-	token = str;
-	str = _strpbrk(token, delim);
-	if (str == NULL)
+	tok = saveptr;
+	while (*saveptr)
 	{
-		*saveptr = _strchr(token, '\0');
-	}
-	else
-	{
-		*str = '\0';
-		*saveptr = str + 1;
-	}
+		const char *d = delim;
 
-	return (token);
+		while (*d)
+		{
+			if (*saveptr == *d)
+			{
+				*saveptr = '\0';
+				saveptr++;
+
+				if (tok != saveptr)
+				{
+					return (tok);
+				}
+				else
+				{
+					tok++;
+					break;
+				}
+			}
+			d++;
+		}
+		saveptr++;
+	}
+	saveptr = NULL;
+	if (tok == saveptr)
+		return (NULL);
+	else
+		return (tok);
 }

@@ -50,81 +50,112 @@ char *check_comments(char *s)
 void handle_cmd(char *cmd, char *prog, int *hist)
 {
 	int i = 0;
-	char **tok = split(cmd, ";");
+	char **args;
 
 	*hist += 1;
-	while (tok[i])
-	{
-		char **subtok = split(tok[i], " ");
 
-		if ((i == 0) && (_strncmp(subtok[i], "exit", 4) == 0))
+	if (check_syntax(cmd, prog, *hist))
+		return;
+
+	args = parse_args(cmd, ";");
+	while (args[i])
+	{
+		char **sub_args = parse_args(args[i], " ");
+
+		if ((i == 0) && (_strcmp(sub_args[i], "exit") == 0))
 		{
 			int status = 0;
 
-			if (subtok[1])
-				status = _atoi(subtok[1]);
+			if (sub_args[1])
+				status = _atoi(sub_args[1]);
 
-			free_args(subtok);
-			free_args(tok);
+			free_args(sub_args);
+			free_args(args);
 			free(cmd);
 			exit(status);
 		}
-		exec_cmds(subtok, prog, *hist);
-		free_args(subtok);
+		exec_cmds(sub_args, prog, *hist);
+		free_args(sub_args);
 		i++;
 	}
-	free_args(tok);
+	free_args(args);
 }
 
 
 
 /**
- * split - split input into array of strings
+ * parse_args - split input into array of strings
  * @cmd: input
  * @delim: refrence delimeter
  *
  * Return: array of string on success, NULL on failure
  */
-char **split(char *cmd, char *delim)
+char **parse_args(char *cmd, const char *delim)
 {
-	char **args, *tmp = cmd;
-	int i = 0, j = 0, height = 0, width = 0;
-	int row = 0, start = 0, ref, n = _strlen(delim);
+	char **args, *tok, *dup;
+	int i = 0;
 
-	for (; cmd[j]; j++)
-	{
-		if (_strncmp(cmd + j, delim, n) == 0 || cmd[j + 1] == '\0')
-			height++;
-	}
-	args = malloc(sizeof(*args) * (height + 1));
+	if (!cmd || !delim)
+		return (NULL);
+
+	dup = _strdup(cmd);
+
+	tok = _strtok(dup, delim);
+	for (; tok; tok = _strtok(NULL, delim))
+		i++;
+	free(dup);
+
+	args = malloc(sizeof(char *) * (i + 1));
 	if (!args)
 		return (NULL);
 
-	while (*cmd)
-	{
-		i++;
-		if (_strncmp(cmd, delim, n) == 0 || *(cmd + 1) == '\0')
-		{
-			if (*(cmd + 1) != '\0')
-				ref = i - 1;
-			else
-				ref = i;
-			width = ref - start;
-			args[row] = malloc(sizeof(char) * width + 1);
-			if (args[row] == NULL)
-			{
-				free_args(args);
-				return (NULL);
-			}
-			_strncpy(args[row], tmp + start, width);
-			args[row][width] = '\0';
-			args[row] = _strip(args[row]);
+	tok = _strtok(cmd, delim);
+	for (i = 0; tok; tok = _strtok(NULL, delim))
+		args[i++] = _strip(_strdup(tok));
 
-			start = ref + n;
-			row++;
-		}
-		cmd++;
-	}
-	args[row] = NULL;
+	args[i] = NULL;
+
 	return (args);
+}
+
+
+
+/**
+ * check_syntax - checks for syntax_error
+ * @cmd: input
+ * @prog: program name.
+ * @hist: history counter.
+ *
+ * Return: TRUE or FALSE
+ */
+int check_syntax(char *cmd, char *prog, int hist)
+{
+	int i = 0;
+
+	for (; cmd[i]; i++)
+	{
+		if (*cmd == ';' || *cmd == '|' || *cmd == '&')
+		{
+			syntax_error(cmd, prog, hist);
+			return (TRUE);
+		}
+		if (cmd[i] == ';' && (cmd[i + 1] == ';' ||
+					cmd[i + 1] == '|' || cmd[i + 1] == '&'))
+		{
+			syntax_error(cmd + i + 1, prog, hist);
+			return (TRUE);
+		}
+		if (cmd[i] == '|' && (cmd[i + 1] == ';' || cmd[i + 1] == '&'))
+		{
+			syntax_error(cmd + i + 1, prog, hist);
+			return (TRUE);
+		}
+		if (cmd[i] == '&' && (cmd[i + 1] == ';' || cmd[i + 1] == '|'))
+		{
+			syntax_error(cmd + i + 1, prog, hist);
+			return (TRUE);
+		}
+	}
+
+	return (FALSE);
 }
