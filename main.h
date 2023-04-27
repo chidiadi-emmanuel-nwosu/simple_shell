@@ -33,6 +33,19 @@ typedef struct op
 } op_t;
 
 
+/**
+ * struct shell - Struct op
+ *
+ * @args: passed in string tokens
+ * @prog: program name
+ * @hist: history
+ */
+typedef struct shell
+{
+	char **args;
+	char *prog;
+	int hist;
+} shell_t;
 
 
 /************main********/
@@ -71,9 +84,9 @@ int check_syntax(char *cmd, char *prog, int hist);
 
 /***********cmd_helphers.c********/
 char *get_cmd();
-char *get_cmd_path(char *cmd);
+char *get_path(char *cmd);
 int exec_cmds(char **args, char *, int);
-int exec_cmd(char *arg, char **args, char *);
+int exec_cmd(char *arg, char **args, char *prog);
 int echo_cmd(char *arg, char **args);
 
 
