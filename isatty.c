@@ -18,6 +18,11 @@ void _non_isatty(char *prog, int *hist)
 	ssize_t n;
 
 	n = read(STDIN_FILENO, buffer, BUF_SIZE);
+	if (n == -1 || n == 0)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		exit(EXIT_FAILURE);
+	}
 	buffer[n - 1] = '\0';
 
 	tmp = parse_args(buffer, "\n");
@@ -26,7 +31,6 @@ void _non_isatty(char *prog, int *hist)
 		handle_cmd(tmp[n], prog, hist);
 	free_args(tmp);
 
-	exit(0);
 }
 
 

@@ -110,7 +110,7 @@ char *_strcat(char *dest, char *src);
 
 /************string_helphers2********/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-ssize_t readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size);
+ssize_t _readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size);
 char *_strip(char *str);
 char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);

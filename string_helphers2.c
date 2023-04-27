@@ -28,7 +28,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	else
 		buf_size = *n;
 
-	return (readline(buffer, lineptr, n, &buf_size));
+	return (_readline(buffer, lineptr, n, &buf_size));
 
 }
 
@@ -44,7 +44,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
  *
  * Return: number of bytes read
  */
-ssize_t readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size)
+ssize_t _readline(char *buffer, char **lineptr, size_t *n, ssize_t *buf_size)
 {
 	ssize_t read_bytes = 0;
 
