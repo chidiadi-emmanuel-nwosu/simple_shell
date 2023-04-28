@@ -64,6 +64,8 @@ void handle_cmd(char *cmd, char *prog, int *hist)
 			if (subtok[1])
 				status = _atoi(subtok[1]);
 
+			free_args(subtok);
+			free_args(tok);
 			exit(status);
 		}
 		exec_cmds(subtok, prog, *hist);
