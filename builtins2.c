@@ -19,6 +19,8 @@ int setenv_cmd(char **args, char *prog, int hist)
 	if (args[1] && args[2])
 		_setenv(args[1], args[2], 0);
 
+	(void)prog;
+	(void)hist;
 	return (0);
 }
 
@@ -38,5 +40,7 @@ int unsetenv_cmd(char **args, char *prog, int hist)
 	if (args[1])
 		_unsetenv(args[1]);
 
+	(void)prog;
+	(void)hist;
 	return (0);
 }
