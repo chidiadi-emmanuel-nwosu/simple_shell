@@ -8,6 +8,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <errno.h>
 #define TRUE 1
 #define MAX_NUM_ARGS 124
 #define MAX_LINE 80

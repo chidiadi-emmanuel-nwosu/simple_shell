@@ -107,7 +107,7 @@ int exec_cmds(char **args, char *prog, int hist)
 		if (!path)
 		{
 			cmd_error(args[0], prog, hist);
-			return (exit_v = 127);
+			return (errno = 127);
 		}
 	}
 	else
@@ -116,7 +116,7 @@ int exec_cmds(char **args, char *prog, int hist)
 		if (access(path, X_OK) != 0)
 		{
 			cmd_error(args[0], prog, hist);
-			return (exit_v = 127);
+			return (errno = 127);
 		}
 	}
 
@@ -167,7 +167,7 @@ int exec_cmd(char *arg, char **args)
 	else
 		waitpid(pid, &status, 0);
 
-	return (exit_v = WEXITSTATUS(status));
+	return (errno = WEXITSTATUS(status));
 }
 
 

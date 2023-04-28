@@ -32,8 +32,6 @@ void _non_isatty(char *prog, int *hist)
 		handle_cmd(tmp[n], prog, hist);
 	free_args(tmp);
 	free(buffer_d);
-
-	exit(0);
 }
 
 
@@ -94,5 +92,4 @@ void file_input(char **av, char *prog, int *hist)
 
 	free_args(tmp);
 	close(fd);
-	exit(0);
 }
