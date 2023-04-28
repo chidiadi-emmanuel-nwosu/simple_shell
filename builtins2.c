@@ -16,22 +16,8 @@
  */
 int setenv_cmd(char **args, char *prog, int hist)
 {
-	if (args[1] == NULL)
-	{
-		cmd_error(args[0], prog, hist);
-	}
-
-	else if (args[2] == NULL)
-	{
-		if (_setenv(args[1], "", 1) == -1)
-			perror(args[1]);
-	}
-
-	else
-	{
-		if (_setenv(args[1], args[2], 1) == -1)
-			perror(args[1]);
-	}
+	if (args[1] && args[2])
+		_setenv(args[1], args[2], 0);
 
 	return (0);
 }
@@ -49,10 +35,7 @@ int setenv_cmd(char **args, char *prog, int hist)
  */
 int unsetenv_cmd(char **args, char *prog, int hist)
 {
-	if (args[1] == NULL)
-		cmd_error(args[0], prog, hist);
-
-	else
+	if (args[1])
 		_unsetenv(args[1]);
 
 	return (0);
