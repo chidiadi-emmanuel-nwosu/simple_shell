@@ -36,6 +36,7 @@ void _non_isatty(char *prog, int *hist)
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n], prog, hist);
 	free_args(tmp);
+	free(cmd);
 
 	exit(0);
 }
