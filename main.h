@@ -87,6 +87,7 @@ int _unsetenv(char *name);
 void cmd_error(char *cmd, char *, int);
 void syntax_error(char *cmd, char *, int);
 void cannot_open_error(char *cmd, char *prog, int hist);
+void cd_error(char *cmd, char *prog, int hist);
 
 
 

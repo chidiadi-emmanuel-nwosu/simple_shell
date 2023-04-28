@@ -20,10 +20,8 @@ int cd_cmd(char **args, char *prog, int hist)
 
 
 	else if (chdir(args[1]) == -1)
-		perror(args[1]);
+		cd_error(args[1], prog, hist);
 
-	(void)prog;
-	(void)hist;
 	return (0);
 }
 
