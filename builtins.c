@@ -15,14 +15,24 @@
  */
 int cd_cmd(char **args, char *prog, int hist)
 {
-	if (hist || prog)
-	{}
+	char cur_pwd[BUF_SIZE];
+
+	getcwd(cur_pwd, sizeof(cur_pwd));
+
 	if (args[1] == NULL)
-		chdir(_getenv("HOME"));
+		if (_getenv("HOME"))
+			chdir(_getenv("HOME"));
+
+	else if (*(args[1]) == '-')
+		if (_getenv("OLDPWD"))
+			chdir(_getenv("OLDPWD"));
 
 	else if (chdir(args[1]) == -1)
 		perror(args[1]);
 
+	_setenv("OLDPWD", cur_pwd, 1);
+	(void)prog;
+	(void)hist;
 	return (0);
 }
 
@@ -40,8 +50,6 @@ int env_cmd(char **args, char *prog, int hist)
 {
 	int i = 0;
 
-	if (hist && args && prog)
-	{}
 	if (environ)
 	{
 		while (environ[i])
@@ -52,6 +60,8 @@ int env_cmd(char **args, char *prog, int hist)
 		}
 	}
 
+	(void)prog;
+	(void)hist;
 	return (0);
 }
 
