@@ -15,19 +15,21 @@
  */
 int cd_cmd(char **args, char *prog, int hist)
 {
-	char cur_pwd[BUF_SIZE];
+	char cur_pwd[BUF_SIZE], *tmp;
 
 	getcwd(cur_pwd, sizeof(cur_pwd));
 
 	if (args[1] == NULL)
 	{
-		if (_getenv("HOME"))
+		tmp = _getenv("HOME");
+		if (tmp)
 			chdir(_getenv("HOME"));
 	}
 
 	else if (*(args[1]) == '-')
 	{
-		if (_getenv("OLDPWD"))
+		tmp = _getenv("OLDPWD");
+		if (tmp)
 			chdir(_getenv("OLDPWD"));
 	}
 
