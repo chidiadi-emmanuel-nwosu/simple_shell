@@ -27,7 +27,7 @@ int main(__attribute__((unused)) int ac, char **av)
 	else
 		_isatty(prog, &hist);
 
-	return (errno);
+	return (0);
 }
 
 

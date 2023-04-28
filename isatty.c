@@ -32,6 +32,8 @@ void _non_isatty(char *prog, int *hist)
 		handle_cmd(tmp[n], prog, hist);
 	free_args(tmp);
 	free(buffer_d);
+
+	exit(errno);
 }
 
 
