@@ -20,15 +20,21 @@ int cd_cmd(char **args, char *prog, int hist)
 	getcwd(cur_pwd, sizeof(cur_pwd));
 
 	if (args[1] == NULL)
+	{
 		if (_getenv("HOME"))
 			chdir(_getenv("HOME"));
+	}
 
 	else if (*(args[1]) == '-')
+	{
 		if (_getenv("OLDPWD"))
 			chdir(_getenv("OLDPWD"));
+	}
 
 	else if (chdir(args[1]) == -1)
+	{
 		perror(args[1]);
+	}
 
 	_setenv("OLDPWD", cur_pwd, 1);
 	(void)prog;
@@ -62,6 +68,7 @@ int env_cmd(char **args, char *prog, int hist)
 
 	(void)prog;
 	(void)hist;
+	(void)args;
 	return (0);
 }
 
