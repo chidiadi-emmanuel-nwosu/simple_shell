@@ -73,24 +73,37 @@ void _isatty(char *prog, int *hist)
  */
 void file_input(char **av, char *prog, int *hist)
 {
-	char buffer[BUF_SIZE], **tmp;
-	ssize_t fd = 0, n = 0;
+	char buffer[BUF_SIZE], *buffer_d = NULL, **tmp;
+	ssize_t fd = 0, r = 0, n = 0;
+	size_t count = 0;
 
 	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
+	if (fd == -1)
 	{
-		perror(av[1]);
-		exit(EXIT_FAILURE);
+		cannot_open_error(av[1], prog, *hist);
+		exit(127);
 	}
 
-	n = read(fd, buffer, BUF_SIZE);
-	buffer[n - 1] = '\0';
+	while ((r = read(fd, buffer, BUF_SIZE)) > 0)
+	{
+		if (r == -1)
+		{	free(buffer_d);
+			exit(127);
+		}
+		buffer_d = _realloc(buffer_d, count, count + r + 1);
+		for (n = 0; n < r; n++)
+			buffer_d[count++] = buffer[n];
+	}
+	close(fd);
 
-	tmp = split(buffer, "\n");
+	buffer_d[count] = '\0';
+	buffer_d = _strip(check_comments(buffer_d));
+	tmp = parse_args(buffer_d, "\n");
 
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n], prog, hist);
 
+	free(buffer_d);
 	free_args(tmp);
 	close(fd);
 }

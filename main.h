@@ -86,6 +86,7 @@ int _unsetenv(char *name);
 /***********errors.c********/
 void cmd_error(char *cmd, char *, int);
 void syntax_error(char *cmd, char *, int);
+void cannot_open_error(char *cmd, char *prog, int hist);
 
 
 
@@ -102,6 +103,11 @@ char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
 char *_strcat(char *dest, char *src);
+
+
+/************string_helphers********/
+char **parse_args(char *cmd, const char *delim);
+char *_strtok(char *str, const char *delim);
 
 
 
