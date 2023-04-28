@@ -15,9 +15,7 @@
  */
 int cd_cmd(char **args, char *prog, int hist)
 {
-	char cur_pwd[BUF_SIZE], *tmp;
-
-	getcwd(cur_pwd, sizeof(cur_pwd));
+	char *tmp;
 
 	if (args[1] == NULL)
 	{
@@ -38,7 +36,6 @@ int cd_cmd(char **args, char *prog, int hist)
 		perror(args[1]);
 	}
 
-	_setenv("OLDPWD", cur_pwd, 1);
 	(void)prog;
 	(void)hist;
 	return (0);
