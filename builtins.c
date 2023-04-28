@@ -15,19 +15,12 @@
  */
 int cd_cmd(char **args, char *prog, int hist)
 {
-	char *tmp;
-
 	if (args[1] == NULL)
-	{
-		tmp = _getenv("HOME");
-		if (tmp)
-			chdir(_getenv(tmp));
-	}
+		chdir(_getenv("HOME"));
+
 
 	else if (chdir(args[1]) == -1)
-	{
 		perror(args[1]);
-	}
 
 	(void)prog;
 	(void)hist;
