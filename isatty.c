@@ -14,13 +14,24 @@
  */
 void _non_isatty(char *prog, int *hist)
 {
-	char buffer[BUF_SIZE], **tmp;
-	ssize_t n;
+	char *cmd = NULL, **tmp;
+	size_t size = 0;
+	int n_read = 0, n;
 
-	n = read(STDIN_FILENO, buffer, BUF_SIZE);
-	buffer[n - 1] = '\0';
+	n_read = _getline(&cmd, &size, stdin);
+	if (n_read == -1)
+	{
+		free(cmd);
+		write(STDOUT_FILENO, "\n", 1);
+		exit(EXIT_FAILURE);
+	}
 
-	tmp = split(buffer, "\n");
+	if (n_read > 0 && cmd[n_read - 1] == '\n')
+		cmd[n_read - 1] = '\0';
+
+
+	cmd = _strip(check_comments(cmd));
+	tmp = split(cmd, "\n");
 
 	for (n = 0; tmp[n]; n++)
 		handle_cmd(tmp[n], prog, hist);
