@@ -76,8 +76,9 @@ int _setenv(char *name, char *value, int overwrite)
 	new_value[name_len] = '=';
 	_memcpy(new_value + name_len + 1, value, value_len);
 	new_value[name_len + value_len + 1] = '\0';
-	*(env++) = new_value;
+	*(env++) = _strdup(new_value);
 	*env = NULL;
+	free(new_value);
 
 	return (0);
 }
