@@ -167,7 +167,7 @@ int exec_cmd(char *arg, char **args)
 	else
 		waitpid(pid, &status, 0);
 
-	return (errno = WEXITSTATUS(status));
+	return (WEXITSTATUS(status));
 }
 
 

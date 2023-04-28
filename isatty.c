@@ -74,7 +74,7 @@ void _isatty(char *prog, int *hist)
  */
 void file_input(char **av, char *prog, int *hist)
 {
-	char buffer[BUF_SIZE], **tmp;
+	char buffer[BUF_SIZE], **tmp, *buffer_d;
 	ssize_t fd = 0, n = 0;
 
 	fd = open(av[1], O_RDONLY);
@@ -87,6 +87,11 @@ void file_input(char **av, char *prog, int *hist)
 	n = read(fd, buffer, BUF_SIZE);
 	buffer[n - 1] = '\0';
 
+	buffer_d = malloc(n + 1);
+	if (!buffer_d)
+		exit(EXIT_FAILURE);
+	buffer_d = _strcpy(buffer_d, buffer);
+	buffer_d = _strip(check_comments(buffer_d));
 	tmp = split(buffer, "\n");
 
 	for (n = 0; tmp[n]; n++)
