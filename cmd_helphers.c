@@ -107,7 +107,7 @@ int exec_cmds(char **args, char *prog, int hist)
 		if (!path)
 		{
 			cmd_error(args[0], prog, hist);
-			return (errno = 127);
+			return (exit_v = 127);
 		}
 	}
 	else
@@ -116,7 +116,7 @@ int exec_cmds(char **args, char *prog, int hist)
 		if (access(path, X_OK) != 0)
 		{
 			cmd_error(args[0], prog, hist);
-			return (errno = 127);
+			return (exit_v = 127);
 		}
 	}
 
