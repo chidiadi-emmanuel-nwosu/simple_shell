@@ -24,13 +24,6 @@ int cd_cmd(char **args, char *prog, int hist)
 			chdir(_getenv(tmp));
 	}
 
-	else if (*(args[1]) == '-')
-	{
-		tmp = _getenv("OLDPWD");
-		if (tmp)
-			chdir(_getenv(tmp));
-	}
-
 	else if (chdir(args[1]) == -1)
 	{
 		perror(args[1]);
